@@ -52,9 +52,16 @@ class QuizActivity : AppCompatActivity() {
         textColorDefaultCd = textCountdown.textColors
         textColorDefaultRb = rb1.textColors
 
+        val intent = intent
+        val difficulty = intent.getStringExtra(MainActivity.EXTRA_DIFFICULTY)
+
+        textDifficulty.setText("Difficulty: "+ difficulty)
+
+
+
         if (savedInstanceState == null) {
             db = QuizDbHelper(this)
-            questionList = db.getAllQuestion
+            questionList = db.getQuestion(difficulty)
 
             questionCountTotal = questionList.size
             Collections.shuffle(questionList)
@@ -67,14 +74,6 @@ class QuizActivity : AppCompatActivity() {
             timeLeft = savedInstanceState.getLong(KEY_TIME_LEFT)
             answered = savedInstanceState.getBoolean(KEY_ANSWERED)
             currentQuestion = questionList.get(questionCounter - 1)
-
-            textScore.setText("Score: $score")
-            textQuestionCount.
-                setText("Question: " + questionCounter + "/" + questionCountTotal)
-            textQuestion.setText(currentQuestion!!.question)
-            rb1.setText(currentQuestion!!.option1)
-            rb2.setText(currentQuestion!!.option2)
-            rb3.setText(currentQuestion!!.option3)
 
 
             if (!answered){

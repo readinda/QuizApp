@@ -5,11 +5,13 @@ import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.ArrayAdapter
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
     companion object{
         var REQUEST_CODE_QUIZ = 1
+        val EXTRA_DIFFICULTY = "extraDifficulty"
 
         var SHARED_PREF = "SharePref"
         var KEY_HIGHSCORE = "keyHighscore"
@@ -28,18 +30,31 @@ class MainActivity : AppCompatActivity() {
 
         loadHighscore()
 
+        loadSpinnerDifficulty()
+
         btnStartQuiz.setOnClickListener {
 
             questionList = db.getAllQuestion
 
             if (questionList.size > 0) {
+                val difficulty = spinnerDifficulty.selectedItem.toString()
+
                 val i = Intent(this@MainActivity, QuizActivity::class.java)
+                i.putExtra(EXTRA_DIFFICULTY, difficulty)
                 startActivityForResult(i, REQUEST_CODE_QUIZ)
             } else {
                 fillQuestion()
             }
 
         }
+    }
+
+    private fun loadSpinnerDifficulty() {
+        val difficultyLevels = Question.getAllDifficultyLevels()
+        val adapterDifficulty = ArrayAdapter(this,
+            R.layout.support_simple_spinner_dropdown_item, difficultyLevels)
+        spinnerDifficulty.adapter = adapterDifficulty
+
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
