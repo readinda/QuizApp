@@ -54,14 +54,17 @@ class QuizActivity : AppCompatActivity() {
 
         val intent = intent
         val difficulty = intent.getStringExtra(MainActivity.EXTRA_DIFFICULTY)
+        val categoryID = intent.getIntExtra(MainActivity.EXTRA_CATEGORY_ID, 0)
+        val categoryName = intent.getStringExtra(MainActivity.EXTRA_CATEGORY_NAME)
 
         textDifficulty.setText("Difficulty: "+ difficulty)
+        textCategory.setText("Category: "+ categoryName)
 
 
 
         if (savedInstanceState == null) {
             db = QuizDbHelper(this)
-            questionList = db.getQuestion(difficulty)
+            questionList = db.getQuestion(categoryID,difficulty)
 
             questionCountTotal = questionList.size
             Collections.shuffle(questionList)

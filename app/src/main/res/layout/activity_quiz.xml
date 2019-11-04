@@ -36,6 +36,15 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:id="@+id/textCategory"
+        android:text="Category: "
+        android:layout_below="@id/textDifficulty"
+        android:textColor="@android:color/black"
+        android:freezesText="true"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:id="@+id/textCountdown"
         android:textSize="40sp"
         android:text="00:30"
